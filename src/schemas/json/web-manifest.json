@@ -22,11 +22,13 @@
     },
     "dir": {
       "description": "The base direction of the manifest.",
+      "type": "string",
       "enum": [ "ltr", "rtl", "auto" ],
       "default": "auto"
     },
     "display": {
       "description": "The item represents the developer's preferred display mode for the web application.",
+      "type": "string",
       "enum": [ "fullscreen", "standalone", "minimal-ui", "browser" ],
       "default": "browser"
     },
@@ -38,7 +40,7 @@
       "description": "The icons member is an array of icon objects that can serve as iconic representations of the web application in various contexts.",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/image"
+        "$ref": "#/definitions/web_app_manifest_image"
       }
     },
     "lang": {
@@ -51,6 +53,7 @@
     },
     "orientation": {
       "description": "The orientation member is a string that serves as the default orientation for all  top-level browsing contexts of the web application.",
+      "type": "string",
       "enum": [ "any", "natural", "landscape", "portrait", "portrait-primary", "portrait-secondary", "landscape-primary", "landscape-secondary" ]
     },
     "prefer_related_applications": {
@@ -61,7 +64,7 @@
       "description": "Array of application accessible to the underlying application platform that has a relationship with the web application.",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/related_application"
+        "$ref": "#/definitions/web_app_manifest_related_application"
       }
     },
     "scope": {
@@ -72,7 +75,7 @@
       "description": "The screenshots member is an array of image objects represent the web application in common usage scenarios.",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/image"
+        "$ref": "#/definitions/web_app_manifest_image"
       }
     },
     "serviceworker": {
@@ -108,24 +111,25 @@
     "theme_color": {
       "description": "The theme_color member serves as the default theme color for an application context.",
       "type": "string"
+    },
+    "gcm_sender_id": {
+      "type": "string"
+    },
+    "gcm_user_visible_only": {
+      "type": "boolean"
     }
   },
   "required": [ "name", "icons" ],
+
+
+
   "definitions": {
-    "image": {
+    "web_app_manifest_image": {
       "type": "object",
       "properties": {
         "sizes": {
           "description": "The sizes member is a string consisting of an unordered set of unique space-separated tokens which are ASCII case-insensitive that represents the dimensions of an image for visual media.",
-          "oneOf": [
-            {
-              "type": "string",
-              "pattern": "^[0-9 x]+$"
-            },
-            {
-              "enum": [ "any" ]
-            }
-          ]
+          "type": "string"
         },
         "src": {
           "description": "The src member of an image is a URL from which a user agent can fetch the icon's data.",
@@ -142,15 +146,19 @@
           "default": "any"
         },
         "platform": {
-          "$ref": "#/definitions/platform"
+          "description": "The platform it is associated to.",
+          "type": "string",
+          "enum": [ "play", "itunes", "windows" ]
         }
       }
     },
-    "related_application": {
+    "web_app_manifest_related_application": {
       "type": "object",
       "properties": {
         "platform": {
-          "$ref": "#/definitions/platform"
+          "description": "The platform it is associated to.",
+          "type": "string",
+          "enum": [ "play", "itunes", "windows" ]
         },
         "url": {
           "description": "The URL where the application can be found.",
@@ -181,10 +189,6 @@
           }
         }
       }
-    },
-    "platform": {
-      "description": "The platform it is associated to.",
-      "enum": [ "play", "itunes", "windows" ]
     }
   }
 }
